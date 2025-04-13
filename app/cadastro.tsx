@@ -1,36 +1,30 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, CheckBox } from 'react-native';
-import { useRoute } from '@react-navigation/native';
-import CustomInput from '../components/CustomInput';
-import CustomButton from '../components/CustomButton';
+import React from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
-export default function CadastroScreen() {
-  const route = useRoute();
-  const { tipoUsuario } = route.params || { tipoUsuario: 'Desconhecido' };
-  const [checked, setChecked] = useState(false);
+interface Props {
+  tipoUsuario?: string;
+}
 
+export default function CadastroScreen({ tipoUsuario = 'Desconhecido' }: Props) {
   return (
     <View style={styles.container}>
-      <View style={styles.profileCircle} />
+      <Text style={styles.title}>Cadastro</Text>
       <Text style={styles.userType}>Cadastrando como: {tipoUsuario}</Text>
 
-      <View style={styles.form}>
-        <Text style={styles.title}>Cadastro</Text>
+      <TextInput style={styles.input} placeholder="Nome" />
+      <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" />
+      <TextInput style={styles.input} placeholder="Senha" secureTextEntry />
 
-        <CustomInput placeholder="Nome" />
-        <CustomInput placeholder="Email" />
-        <CustomInput placeholder="Localização" />
-        <CustomInput placeholder="Instituição" />
-        <CustomInput placeholder="Senha" secureTextEntry />
-        <CustomInput placeholder="Confirmar Senha" secureTextEntry />
+      {tipoUsuario === 'Professor' && (
+        <>
+          <TextInput style={styles.input} placeholder="Matéria que leciona" />
+          <TextInput style={styles.input} placeholder="Código de identificação" />
+        </>
+      )}
 
-        <View style={styles.checkboxContainer}>
-          <CheckBox value={checked} onValueChange={setChecked} />
-          <Text style={styles.checkboxLabel}>Aceito as políticas de privacidade</Text>
-        </View>
-
-        <CustomButton title="Confirmar" onPress={() => {}} color="#00cc44" />
-      </View>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Cadastrar</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -38,42 +32,41 @@ export default function CadastroScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#007bdb',
-    paddingTop: 60,
-  },
-  profileCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: '#eee',
-    alignSelf: 'center',
-    marginBottom: 10,
-  },
-  userType: {
-    color: '#fff',
-    textAlign: 'center',
-    marginBottom: 10,
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  form: {
+    padding: 30,
+    justifyContent: 'center',
     backgroundColor: '#fff',
-    marginHorizontal: 24,
-    borderRadius: 16,
-    padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
+    marginBottom: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 16,
   },
-  checkboxContainer: {
-    flexDirection: 'row',
+  userType: {
+    fontSize: 18,
+    marginBottom: 20,
+    color: '#666',
+    textAlign: 'center',
+  },
+  input: {
+    height: 50,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    backgroundColor: '#f9f9f9',
+  },
+  button: {
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 10,
     alignItems: 'center',
-    marginVertical: 10,
+    marginTop: 10,
   },
-  checkboxLabel: {
-    marginLeft: 8,
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
