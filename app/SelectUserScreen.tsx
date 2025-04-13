@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Cadastro from './cadastro';
+import CadastroAluno from './Aluno/CadastroAluno'
 
 const SelectUserScreen = () => {
-  const [telaAtual, setTelaAtual] = useState<'select' | 'cadastro'>('select');
+  const [telaAtual, setTelaAtual] = useState<'select' | 'cadastro' | 'CadastroAluno'>('select');
 
   if (telaAtual === 'cadastro') {
-    return <Cadastro />; 
+    return <Cadastro />;
+  } else if (telaAtual === 'CadastroAluno') {
+    return <CadastroAluno />;
   }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Criar como:</Text>
       <View style={styles.row}>
-        <TouchableOpacity style={styles.card} onPress={() => setTelaAtual('cadastro')}>
+        <TouchableOpacity style={styles.card} onPress={() => setTelaAtual('CadastroAluno')}>
           <Image source={require('../assets/Aluno.png')} style={styles.img} />
           <Text style={styles.cardText}>Aluno</Text>
         </TouchableOpacity>
@@ -28,8 +32,12 @@ const SelectUserScreen = () => {
 
       <Text style={styles.altText}>Formas de Criar</Text>
       <View style={styles.altLoginBox}>
-        <TouchableOpacity style={styles.altLoginBtn}><Text style={styles.altLoginText}>Google</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.altLoginBtn}><Text style={styles.altLoginText}>Microsoft</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.altLoginBtn}>
+          <Text style={styles.altLoginText}>Google</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.altLoginBtn}>
+          <Text style={styles.altLoginText}>Microsoft</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
