@@ -10,7 +10,7 @@ export default function SelectUserScreen() {
       <View style={styles.cardContainer}>
         <TouchableOpacity
           style={styles.card}
-          onPress={() => navigationRef.navigate('Cadastro', { tipo: 'Aluno' })}
+          onPress={() => router.push('/aluno/CadastroAluno')}
         >
           <Image source={require('../assets/Aluno.png')} style={styles.img} />
           <Text style={styles.cardText}>Aluno</Text>
