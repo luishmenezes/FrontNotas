@@ -1,48 +1,45 @@
-// import React, { createContext, useState, useEffect, useContext } from 'react';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// type AuthContextType = {
-//   token: string | null;
-//   login: (token: string) => Promise<void>;
-//   logout: () => Promise<void>;
-//   isLoading: boolean;
-// };
+type AuthContextType = {
+  token: string | null;
+  isAuthenticated: boolean;
+  login: (token: string) => Promise<void>;
+  logout: () => Promise<void>;
+};
 
-// const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
-// export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-//   const [token, setToken] = useState<string | null>(null);
-//   const [isLoading, setIsLoading] = useState(true);
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [token, setToken] = useState<string | null>(null);
 
-//   useEffect(() => {
-//     const loadToken = async () => {
-//       const savedToken = await AsyncStorage.getItem('token');
-//       if (savedToken) setToken(savedToken);
-//       setIsLoading(false);
-//     };
-//     loadToken();
-//   }, []);
+  useEffect(() => {
+    const loadToken = async () => {
+      const storedToken = await AsyncStorage.getItem('token');
+      if (storedToken) {
+        setToken(storedToken);
+      }
+    };
 
-//   const login = async (newToken: string) => {
-//     await AsyncStorage.setItem('token', newToken);
-//     setToken(newToken);
-//   };
+    loadToken();
+  }, []);
 
-//   const logout = async () => {
-//     await AsyncStorage.removeItem('token');
-//     setToken(null);
-//   };
+  const login = async (newToken: string) => {
+    await AsyncStorage.setItem('token', newToken);
+    setToken(newToken);
+  };
 
-//   return (
-//     <AuthContext.Provider value={{ token, login, logout, isLoading }}>
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
+  const logout = async () => {
+    await AsyncStorage.removeItem('token');
+    setToken(null);
+  };
 
-// // hook de auth
-// export const useAuth = () => {
-//   const context = useContext(AuthContext);
-//   if (!context) throw new Error('useAuth deve estar dentro do AuthProvider');
-//   return context;
-// };
+  return (
+    <AuthContext.Provider value={{ token, isAuthenticated: !!token, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+// Hook personalizado
+export const useAuth = () => useContext(AuthContext);
