@@ -11,6 +11,8 @@ export default function FormAluno() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [aceitouPolitica, setAceitouPolitica] = useState(false);
+
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -19,7 +21,6 @@ export default function FormAluno() {
         const token = await AsyncStorage.getItem('token');
         if (token) {
           console.log('Usuário já está logado');
-         // navigation.navigate('Home'); // Redireciona para a tela inicial se já estiver logado
         }
       } catch (err) {
         console.error('Erro ao verificar token:', err);
@@ -45,19 +46,22 @@ export default function FormAluno() {
       return;
     }
 
+    if (!aceitouPolitica) {
+      Alert.alert('Você precisa aceitar as políticas de privacidade.');
+      return;
+    }
+
     const aluno = {
       nome,
       email,
       senha,
-      notas: [], // Lista de notas vazia conforme o DTO
-      professorId: null, // Opcional
+      notas: [],
+      professorId: null,
     };
 
     try {
-      // Cadastro
       await axios.post('http://localhost:8080/alunos', aluno);
 
-      // Login
       const loginResponse = await axios.post('http://localhost:8080/auth/login', {
         email,
         senha,
@@ -71,8 +75,8 @@ export default function FormAluno() {
       setEmail('');
       setSenha('');
       setConfirmarSenha('');
+      setAceitouPolitica(false);
 
-    //  navigation.navigate('Home'); // Redireciona para a tela inicial após o login
     } catch (err: any) {
       console.error('Erro:', err);
 
@@ -86,15 +90,26 @@ export default function FormAluno() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.profileCircle} />
-
       <View style={styles.form}>
-        <Text style={styles.title}>Cadastro de Aluno</Text>
+        <Text style={styles.title}>CADASTRO</Text>
 
         <CustomInput placeholder="Nome" value={nome} onChangeText={setNome} />
         <CustomInput placeholder="Email" value={email} onChangeText={setEmail} />
         <CustomInput placeholder="Senha" secureTextEntry value={senha} onChangeText={setSenha} />
         <CustomInput placeholder="Confirmar Senha" secureTextEntry value={confirmarSenha} onChangeText={setConfirmarSenha} />
+
+        <View style={styles.checkboxContainer}>
+          <Text
+            style={[
+              styles.checkbox,
+              { backgroundColor: aceitouPolitica ? '#00cc44' : '#ccc' },
+            ]}
+            onPress={() => setAceitouPolitica(!aceitouPolitica)}
+          >
+            {aceitouPolitica ? '✔' : ''}
+          </Text>
+          <Text style={styles.checkboxLabel}>Aceito as políticas de privacidade</Text>
+        </View>
 
         <CustomButton title="Confirmar" onPress={handleCadastroAluno} color="#00cc44" />
       </View>
@@ -105,19 +120,11 @@ export default function FormAluno() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#007bdb',
+    backgroundColor: '#0477BF',
     paddingTop: 60,
   },
-  profileCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: '#eee',
-    alignSelf: 'center',
-    marginBottom: 10,
-  },
   form: {
-    backgroundColor: '#fff',
+    backgroundColor: '#0455BF',
     marginHorizontal: 24,
     borderRadius: 16,
     padding: 20,
@@ -127,5 +134,26 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 16,
+    color: 'white',
+  },
+  input: {},
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 16,
+    marginBottom: 16,
+  },
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderRadius: 4,
+    marginRight: 10,
+    textAlign: 'center',
+    lineHeight: 24,
+    color: 'white',
+  },
+  checkboxLabel: {
+    color: 'white',
+    fontSize: 14,
   },
 });
