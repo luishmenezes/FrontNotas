@@ -1,28 +1,24 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/AppNavigator';
-import { router } from 'expo-router';
-
-type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'LoginScreen'>;
-
+import { router } from 'expo-router'; 
 export default function LoginScreen() {
-  const navigation = useNavigation<LoginScreenNavigationProp>();
-
   return (
     <View style={styles.container}>
       <Image
-        source={require('../assets/Login.png')}
+        source={require('../assets/LogoNoteasy.png')}
         style={styles.image}
         resizeMode="contain"
       />
-
       <View style={styles.loginBox}>
         <Text style={styles.title}>Login</Text>
 
         <Text style={styles.label}>Email</Text>
-        <TextInput style={styles.input} placeholder="Digite seu email" placeholderTextColor="#aaa" />
+        <TextInput
+          style={styles.input}
+          placeholder="Digite seu email"
+          placeholderTextColor="#aaa"
+        />
 
         <Text style={styles.label}>Senha</Text>
         <TextInput
@@ -32,7 +28,9 @@ export default function LoginScreen() {
           placeholderTextColor="#aaa"
         />
 
-        <Text style={styles.forgotPassword}>Esqueceu a senha ?</Text>
+        <TouchableOpacity>
+          <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity style={styles.confirmButton}>
           <Text style={styles.confirmText}>Confirmar</Text>
@@ -40,16 +38,24 @@ export default function LoginScreen() {
       </View>
 
       <TouchableOpacity style={styles.createBtn} onPress={() => router.push('/SelectUserScreen')}>
-  <Text style={styles.socialText}>Criar Conta</Text>
-</TouchableOpacity>
-
-
+        <Text style={styles.socialText}>Criar Conta</Text>
+      </TouchableOpacity>
 
       <Text style={styles.otherLogins}>Outros Logins</Text>
 
       <View style={styles.socialButtons}>
-        <TouchableOpacity style={styles.socialBtn}><Text style={styles.socialText}>Google</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.socialBtn}><Text style={styles.socialText}>Microsoft</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.socialBtn}>
+          <Text style={styles.socialText}>Google</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialBtn}>
+          <Text style={styles.socialText}>Microsoft</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.registerContainer}>
+        <Text style={styles.registerText}>
+          Não tem conta? <Text style={styles.registerLink} onPress={() => router.push('/cadastro')}>Cadastre-se</Text>
+        </Text>
       </View>
     </View>
   );
@@ -101,27 +107,28 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   confirmButton: {
-    backgroundColor: '#00CC33',
+    backgroundColor: 'linear-gradient(0deg, #006EFF 0%, #001684 80%)', 
     paddingVertical: 12,
     borderRadius: 10,
+    alignItems: 'center',
   },
   confirmText: {
     color: '#fff',
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  createAccount: {
-    backgroundColor: '#003C99',
-    padding: 12,
-    borderRadius: 10,
+  createBtn: {
+    backgroundColor: '#0455BF',
     width: '90%',
+    paddingVertical: 10,
+    borderRadius: 20,
     marginBottom: 10,
   },
-  createText: {
+  socialText: {
     color: '#fff',
     textAlign: 'center',
-    fontWeight: '600',
     fontSize: 16,
+    fontWeight: 'bold',
   },
   otherLogins: {
     color: '#fff',
@@ -143,18 +150,16 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 20,
   },
-  socialText: {
+  registerContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  registerText: {
     color: '#fff',
-    fontWeight: 'bold',
-    textAlign: 'center',
     fontSize: 16,
   },
-  createBtn: {
-    backgroundColor: '#0455BF',
-    width: '90%',
-    paddingVertical: 10,
-    borderRadius: 20,
-    marginBottom: 10,
+  registerLink: {
+    color: '#00CC33', 
+    fontWeight: 'bold',
   },
-
 });

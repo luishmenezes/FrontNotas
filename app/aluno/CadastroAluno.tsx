@@ -19,7 +19,6 @@ export default function FormAluno() {
         const token = await AsyncStorage.getItem('token');
         if (token) {
           console.log('Usuário já está logado');
-        //  navigation.navigate('Home'); // vai pra tela incial caaso ja esteja logado
         }
       } catch (err) {
         console.error('Erro ao verificar token:', err);
@@ -49,14 +48,13 @@ export default function FormAluno() {
       nome,
       email,
       senha,
-      notas: [], // lista de nota vazia
-      professorId: null, // oopcional
+      notas: [],
+      professorId: null,
     };
 
     try {
       await axios.post('http://localhost:8080/alunos', aluno);
 
-      //aq ele ja tenta o login ora mandar pra a home por exemplo
       const loginResponse = await axios.post('http://localhost:8080/auth/login', {
         email,
         senha,
@@ -70,8 +68,6 @@ export default function FormAluno() {
       setEmail('');
       setSenha('');
       setConfirmarSenha('');
-
-     // navigation.navigate('Home'); // vai pra tela home dps do login
     } catch (err: any) {
       console.error('Erro:', err);
 
@@ -90,12 +86,31 @@ export default function FormAluno() {
       <View style={styles.form}>
         <Text style={styles.title}>Cadastro de Aluno</Text>
 
-        <CustomInput placeholder="Nome" value={nome} onChangeText={setNome} />
-        <CustomInput placeholder="Email" value={email} onChangeText={setEmail} />
-        <CustomInput placeholder="Senha" secureTextEntry value={senha} onChangeText={setSenha} />
-        <CustomInput placeholder="Confirmar Senha" secureTextEntry value={confirmarSenha} onChangeText={setConfirmarSenha} />
+        <View style={styles.labelWrapper}>
+          <Text style={styles.label}>Nome</Text>
+          <CustomInput placeholder="Nome" value={nome} onChangeText={setNome} style={styles.input} />
+        </View>
 
-        <CustomButton title="Confirmar" onPress={handleCadastroAluno} color="#00cc44" />
+        <View style={styles.labelWrapper}>
+          <Text style={styles.label}>Email</Text>
+          <CustomInput placeholder="Email" value={email} onChangeText={setEmail} style={styles.input} />
+        </View>
+
+        <View style={styles.labelWrapper}>
+          <Text style={styles.label}>Senha</Text>
+          <CustomInput placeholder="Senha" secureTextEntry value={senha} onChangeText={setSenha} style={styles.input} />
+        </View>
+
+        <View style={styles.labelWrapper}>
+          <Text style={styles.label}>Confirmar Senha</Text>
+          <CustomInput placeholder="Confirmar Senha" secureTextEntry value={confirmarSenha} onChangeText={setConfirmarSenha} style={styles.input} />
+        </View>
+
+        <CustomButton
+          title="Confirmar"
+          onPress={handleCadastroAluno}
+        />
+
       </View>
     </View>
   );
@@ -104,7 +119,7 @@ export default function FormAluno() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#007bdb',
+    backgroundColor: '#1677FF',
     paddingTop: 60,
   },
   profileCircle: {
@@ -116,7 +131,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   form: {
-    backgroundColor: '#fff',
+    backgroundColor: '#0455BF',
     marginHorizontal: 24,
     borderRadius: 16,
     padding: 20,
@@ -124,7 +139,22 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: '#FFF',
     textAlign: 'center',
     marginBottom: 16,
+  },
+  labelWrapper: {
+    marginBottom: 12,
+  },
+  label: {
+    color: '#D9D9D9',
+    marginBottom: 4,
+    fontSize: 14,
+  },
+  input: {
+    backgroundColor: '#D9D9D9',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    height: 40,
   },
 });

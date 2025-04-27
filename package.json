@@ -53,6 +53,26 @@
     }
   },
   "dependencies": {
-    "notafacil": "file:"
+    "@expo/vector-icons": "^14.1.0",
+    "@react-native-async-storage/async-storage": "^2.1.2",
+    "@react-navigation/native-stack": "^7.3.10",
+    "@react-navigation/stack": "^7.2.10",
+    "axios": "^1.8.4",
+    "expo-linear-gradient": "^14.0.2",
+    "expo-router": "^4.0.20",
+    "expo-splash-screen": "^0.29.24",
+    "notafacil": "file:",
+    "react-dom": "18.3.1",
+    "react-native": "^0.76.9",
+    "react-native-calendars": "^1.1311.1",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-native-web": "~0.19.13"
+  },
+  "devDependencies": {
+    "@expo/cli": "^0.22.26",
+    "@types/react": "~18.3.12",
+    "@types/react-native": "^0.73.0",
+    "expo": "^52.0.46",
+    "typescript": "^5.3.3"
   }
 }

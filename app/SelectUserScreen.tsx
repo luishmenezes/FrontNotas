@@ -39,7 +39,7 @@ export default function SelectUserScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffff',
+    backgroundColor: '#1677FF',
     alignItems: 'center',
     justifyContent: 'center',
   },
