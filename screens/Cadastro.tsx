@@ -1,28 +1,81 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
 interface Props {
   tipoUsuario?: string;
 }
 
 export default function CadastroScreen({ tipoUsuario = 'Desconhecido' }: Props) {
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [materia, setMateria] = useState('');
+  const [codigo, setCodigo] = useState('');
+
+  const handleCadastro = () => {
+    if (!nome || !email || !senha) {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    if (tipoUsuario === 'Professor' && (!materia || !codigo)) {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios para o Professor.');
+      return;
+    }
+
+    Alert.alert('Sucesso', `Cadastro de ${tipoUsuario} realizado com sucesso!`);
+    
+    setNome('');
+    setEmail('');
+    setSenha('');
+    setMateria('');
+    setCodigo('');
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Cadastro</Text>
       <Text style={styles.userType}>Cadastrando como: {tipoUsuario}</Text>
 
-      <TextInput style={styles.input} placeholder="Nome" />
-      <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" />
-      <TextInput style={styles.input} placeholder="Senha" secureTextEntry />
+      <TextInput
+        style={styles.input}
+        placeholder="Nome"
+        value={nome}
+        onChangeText={setNome}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Senha"
+        secureTextEntry
+        value={senha}
+        onChangeText={setSenha}
+      />
 
       {tipoUsuario === 'Professor' && (
         <>
-          <TextInput style={styles.input} placeholder="Matéria que leciona" />
-          <TextInput style={styles.input} placeholder="Código de identificação" />
+          <TextInput
+            style={styles.input}
+            placeholder="Matéria que leciona"
+            value={materia}
+            onChangeText={setMateria}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Código de identificação"
+            value={codigo}
+            onChangeText={setCodigo}
+          />
         </>
       )}
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleCadastro}>
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
     </View>

@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Alert, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Alert,
+  TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function NovaSenha() {
@@ -21,49 +32,62 @@ export default function NovaSenha() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.title}>Nova Senha</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.card}>
+            <Text style={styles.title}>Nova Senha</Text>
 
-        <Text style={styles.label}>Nova Senha</Text>
-        <TextInput
-          style={styles.input}
-          value={novaSenha}
-          onChangeText={setNovaSenha}
-          secureTextEntry
-        />
+            <Text style={styles.label}>Nova Senha</Text>
+            <TextInput
+              style={styles.input}
+              value={novaSenha}
+              onChangeText={setNovaSenha}
+              secureTextEntry
+            />
 
-        <Text style={styles.label}>Confirmar Senha</Text>
-        <TextInput
-          style={styles.input}
-          value={confirmarSenha}
-          onChangeText={setConfirmarSenha}
-          secureTextEntry
-        />
+            <Text style={styles.label}>Confirmar Senha</Text>
+            <TextInput
+              style={styles.input}
+              value={confirmarSenha}
+              onChangeText={setConfirmarSenha}
+              secureTextEntry
+            />
 
-        <TouchableOpacity onPress={handleNovaSenha} style={styles.buttonWrapper}>
-          <LinearGradient
-            colors={['#001684', '#006EFF']} // Gradiente para o botão
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Enviar</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
-    </View>
+            <TouchableOpacity onPress={handleNovaSenha} style={styles.buttonWrapper}>
+              <LinearGradient
+                colors={['#001684', '#006EFF']}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Enviar</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: '#0477BF',
+  },
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 24,
   },
   card: {
-    backgroundColor: '#0061A1', // Cor um pouco mais escura que o azul da tela
+    backgroundColor: '#0061A1',
     borderRadius: 16,
     padding: 20,
     width: '100%',

@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { Calendar } from 'react-native-calendars'; 
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Calendar } from 'react-native-calendars';
 
 export default function TelaCalendario() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       <View style={styles.upperHalf}>
         <Calendar
           style={styles.calendar}
@@ -27,7 +27,7 @@ export default function TelaCalendario() {
           <Text style={styles.fieldDescription}>Prova de História</Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -36,9 +36,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0477BF',
   },
+  scrollContent: {
+    paddingVertical: 20,
+  },
   upperHalf: {
-    flex: 1,
-    justifyContent: 'center',
     paddingHorizontal: 24,
   },
   calendar: {
@@ -47,9 +48,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   lowerHalf: {
-    flex: 1,
+    marginTop: 20,
     paddingHorizontal: 24,
-    justifyContent: 'center',
   },
   fieldContainer: {
     backgroundColor: '#fff',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function RecuperacaoSenha() {
@@ -15,52 +15,58 @@ export default function RecuperacaoSenha() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.title}>Código de recuperação</Text>
-        <Text style={styles.subtitle}>
-          Esqueceu sua senha? Não se preocupe, enviamos um código de recuperação para seu email. Digite-o e crie uma nova senha.
-        </Text>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+        <View style={styles.card}>
+          <Text style={styles.title}>Código de recuperação</Text>
+          <Text style={styles.subtitle}>
+            Esqueceu sua senha? Não se preocupe, enviamos um código de recuperação para seu email. Digite-o e crie uma nova senha.
+          </Text>
 
-        <TextInput
-          style={styles.input}
-          value={codigo}
-          onChangeText={setCodigo}
-          keyboardType="numeric"
-          placeholder="Digite o código"
-        />
+          <TextInput
+            style={styles.input}
+            value={codigo}
+            onChangeText={setCodigo}
+            keyboardType="numeric"
+            placeholder="Digite o código"
+          />
 
-        <TouchableOpacity onPress={handleRecuperarSenha}>
-          <LinearGradient
-            colors={['#001684', '#006EFF']}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Confirmar</Text>
-          </LinearGradient>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={handleRecuperarSenha}>
+            <LinearGradient
+              colors={['#001684', '#006EFF']}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Confirmar</Text>
+            </LinearGradient>
+          </TouchableOpacity>
 
-        <Text style={styles.reenviar}>Reenviar código</Text>
-      </View>
-    </View>
+          <Text style={styles.reenviar}>Reenviar código</Text>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#0477BF',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 24,
+    paddingVertical: 32,
   },
   card: {
-    backgroundColor: '#03629C', 
+    backgroundColor: '#03629C',
     borderRadius: 16,
     padding: 20,
     width: '100%',
     maxWidth: 400,
     alignItems: 'center',
-    elevation: 4, 
+    elevation: 4,
   },
   title: {
     fontSize: 24,
