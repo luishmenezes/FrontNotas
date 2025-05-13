@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert, CheckBox } from 'react-native';
+import { View, Text, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '@/components/CustomButton';
@@ -54,8 +54,8 @@ export default function FormAluno() {
       nome,
       email,
       senha,
-      notas: [], 
-      professorId: null, 
+      notas: [],
+      professorId: null,
     };
 
     try {
@@ -88,34 +88,30 @@ export default function FormAluno() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.form}>
-        <Text style={styles.title}>Cadastro de Aluno</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={styles.container}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.form}>
+          <Text style={styles.title}>Cadastro de Aluno</Text>
 
-        <CustomInput placeholder="Nome" value={nome} onChangeText={setNome} />
+          <CustomInput placeholder="Nome" value={nome} onChangeText={setNome} />
 
-        <CustomInput placeholder="Email" value={email} onChangeText={setEmail} />
+          <CustomInput placeholder="Email" value={email} onChangeText={setEmail} />
 
-        <CustomInput placeholder="Senha" secureTextEntry value={senha} onChangeText={setSenha} />
+          <CustomInput placeholder="Senha" secureTextEntry value={senha} onChangeText={setSenha} />
 
-        <CustomInput placeholder="Confirmar Senha" secureTextEntry value={confirmarSenha} onChangeText={setConfirmarSenha} />
+          <CustomInput placeholder="Confirmar Senha" secureTextEntry value={confirmarSenha} onChangeText={setConfirmarSenha} />
 
-        <View style={styles.checkboxContainer}>
-          <CheckBox
-            value={aceitoPoliticas}
-            onValueChange={setAceitoPoliticas}
-            style={styles.checkbox}
-          />
-          <Text style={styles.checkboxLabel}>Aceito as políticas de privacidade</Text>
+          <View style={styles.checkboxContainer}>
+            <Text style={styles.checkboxLabel}>Aceito as políticas de privacidade</Text>
+          </View>
+
+          <CustomButton title="Confirmar" onPress={handleCadastroAluno} />
         </View>
-
-      </View>
-
-      <CustomButton
-        title="Confirmar"
-        onPress={handleCadastroAluno}
-      />
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -123,15 +119,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#007bdb',
-    paddingTop: 60,
   },
-  profileCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: '#eee',
-    alignSelf: 'center',
-    marginBottom: 10,
+  scrollContent: {
+    paddingTop: 60,
+    paddingBottom: 40,
   },
   form: {
     backgroundColor: '#0455BF',
@@ -146,11 +137,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     color: '#fff',
   },
-  label: {
-    fontSize: 16,
-    color: '#fff', 
-    marginBottom: 8,
-  },
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -160,6 +146,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   checkboxLabel: {
-    color: '#fff', 
+    color: '#fff',
   },
 });

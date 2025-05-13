@@ -1,38 +1,52 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  SafeAreaView,
+  ScrollView
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function Dashboard() {
   return (
-    <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image source={require('@/assets/LogoNoteasy.png')} style={styles.logo} />
-      </View>
-
-      <View style={styles.cardsContainer}>
-        <View style={styles.cardRow}>
-          <TouchableOpacity style={styles.card}>
-            <Ionicons name="clipboard" size={30} color="#fff" />
-            <Text style={styles.cardText}>Provas</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.card}>
-            <Ionicons name="calendar" size={30} color="#fff" />
-            <Text style={styles.cardText}>Calendário</Text>
-          </TouchableOpacity>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.logoContainer}>
+          <Image
+            source={require('@/assets/LogoNoteasy.png')}
+            style={styles.logo}
+          />
         </View>
-        <View style={styles.cardRow}>
-          <TouchableOpacity style={styles.card}>
-            <Ionicons name="person" size={30} color="#fff" />
-            <Text style={styles.cardText}>Professor</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.card}>
-            <Ionicons name="book" size={30} color="#fff" />
-            <Text style={styles.cardText}>Matéria</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
 
-      {/* Navbar */}
+        <View style={styles.cardsContainer}>
+          <View style={styles.cardRow}>
+            <TouchableOpacity style={styles.card}>
+              <Ionicons name="clipboard" size={30} color="#fff" />
+              <Text style={styles.cardText}>Provas</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.card}>
+              <Ionicons name="calendar" size={30} color="#fff" />
+              <Text style={styles.cardText}>Calendário</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.cardRow}>
+            <TouchableOpacity style={styles.card}>
+              <Ionicons name="person" size={30} color="#fff" />
+              <Text style={styles.cardText}>Professor</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.card}>
+              <Ionicons name="book" size={30} color="#fff" />
+              <Text style={styles.cardText}>Matéria</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* Navbar fixa */}
       <View style={styles.navbar}>
         <TouchableOpacity style={styles.menuIcon}>
           <Ionicons name="menu" size={30} color="#fff" />
@@ -41,16 +55,19 @@ export default function Dashboard() {
           <Ionicons name="person-circle" size={30} color="#fff" />
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: '#007bdb',
+  },
+  container: {
     paddingTop: 50,
     paddingHorizontal: 20,
+    paddingBottom: 100,
   },
   logoContainer: {
     alignItems: 'center',

@@ -1,63 +1,76 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { router } from 'expo-router'; 
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+import { useRouter } from 'expo-router';
+
 export default function LoginScreen() {
+  const router = useRouter();
+
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('../assets/LogoNoteasy.png')}
-        style={styles.image}
-        resizeMode="contain"
-      />
-      <View style={styles.loginBox}>
-        <Text style={styles.title}>Login</Text>
-
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Digite seu email"
-          placeholderTextColor="#aaa"
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/LogoNoteasy.png')}
+          style={styles.image}
+          resizeMode="contain"
         />
+        <View style={styles.loginBox}>
+          <Text style={styles.title}>Login</Text>
 
-        <Text style={styles.label}>Senha</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Digite sua senha"
-          secureTextEntry
-          placeholderTextColor="#aaa"
-        />
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite seu email"
+            placeholderTextColor="#aaa"
+          />
 
-        <TouchableOpacity>
-          <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
+          <Text style={styles.label}>Senha</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite sua senha"
+            secureTextEntry
+            placeholderTextColor="#aaa"
+          />
+
+          <TouchableOpacity>
+            <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.confirmButton}>
+            <Text style={styles.confirmText}>Confirmar</Text>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          style={styles.createBtn}
+          onPress={() => router.push('/SelectUserScreen')}
+        >
+          <Text style={styles.socialText}>Criar Conta</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.confirmButton}>
-          <Text style={styles.confirmText}>Confirmar</Text>
-        </TouchableOpacity>
+        <Text style={styles.otherLogins}>Outros Logins</Text>
+
+        <View style={styles.socialButtons}>
+          <TouchableOpacity style={styles.socialBtn}>
+            <Text style={styles.socialText}>Google</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.socialBtn}>
+            <Text style={styles.socialText}>Microsoft</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.registerContainer}>
+          <Text style={styles.registerText}>
+            Não tem conta?{' '}
+            <Text
+              style={styles.registerLink}
+              onPress={() => router.push('/cadastro')}
+            >
+              Cadastre-se
+            </Text>
+          </Text>
+        </View>
       </View>
-
-      <TouchableOpacity style={styles.createBtn} onPress={() => router.push('/SelectUserScreen')}>
-        <Text style={styles.socialText}>Criar Conta</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.otherLogins}>Outros Logins</Text>
-
-      <View style={styles.socialButtons}>
-        <TouchableOpacity style={styles.socialBtn}>
-          <Text style={styles.socialText}>Google</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialBtn}>
-          <Text style={styles.socialText}>Microsoft</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.registerContainer}>
-        <Text style={styles.registerText}>
-          Não tem conta? <Text style={styles.registerLink} onPress={() => router.push('/cadastro')}>Cadastre-se</Text>
-        </Text>
-      </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -67,6 +80,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#0072CE',
     alignItems: 'center',
     paddingVertical: 30,
+  },
+  scrollContainer: {
+    flexGrow: 1, 
+    paddingBottom: 30, 
   },
   image: {
     width: 200,
@@ -107,7 +124,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   confirmButton: {
-    backgroundColor: 'linear-gradient(0deg, #006EFF 0%, #001684 80%)', 
+    backgroundColor: '#004BFF',
     paddingVertical: 12,
     borderRadius: 10,
     alignItems: 'center',
@@ -159,7 +176,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   registerLink: {
-    color: '#00CC33', 
+    color: '#00CC33',
     fontWeight: 'bold',
   },
 });

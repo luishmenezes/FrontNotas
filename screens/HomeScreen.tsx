@@ -8,6 +8,10 @@ const HomeScreen = () => {
         source={require('../assets/LogoNoteasy.png')}
         style={styles.logo}
       />
+      <Text style={styles.welcomeText}>Bem-vindo ao Noteasy!</Text>
+      <Text style={styles.descriptionText}>
+        Organize suas anotações e tarefas de maneira prática e eficiente.
+      </Text>
     </View>
   );
 };
@@ -25,11 +29,18 @@ const styles = StyleSheet.create({
   logo: {
     width: 200,
     height: 150,
-    marginBottom: 20, 
+    marginBottom: 20,
   },
-  text: {
+  welcomeText: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  descriptionText: {
+    color: '#fff',
+    fontSize: 18,
+    textAlign: 'center',
+    marginHorizontal: 20,
   },
 });
