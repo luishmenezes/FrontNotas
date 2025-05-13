@@ -12,6 +12,7 @@ import NovaSenha from '../screens/NovaSenha/NovaSenha';
 import EventoProva from '../screens/EventoProva/EventoProva';
 import Calendario from '../screens/Calendario/Calendario';
 import Inicio from '../screens/Inicio/Inicio';
+import EventoProfessor from '../screens/EventoProfessor/EventoProfessorScreen';
 
 export type RootStackParamList = {
   SelectUser: undefined;
@@ -25,6 +26,7 @@ export type RootStackParamList = {
   EventoProva: undefined;
   Calendario: undefined;
   Inicio: undefined;
+  EventoProfessor: undefined;
 
 };
 
@@ -32,7 +34,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="SelectUser">
+    <Stack.Navigator initialRouteName="EventoProfessor">
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="SelectUser" component={SelectUserScreen} />
       <Stack.Screen name="Cadastro" component={CadastroScreen} />
@@ -44,6 +46,7 @@ export default function AppNavigator() {
       <Stack.Screen name="EventoProva" component={EventoProva} />
       <Stack.Screen name="Calendario" component={Calendario} />
       <Stack.Screen name="Inicio" component={Inicio} />
+      <Stack.Screen name="EventoProfessor" component={EventoProfessor} />
     </Stack.Navigator>
   );
 }
