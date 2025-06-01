@@ -9,7 +9,6 @@ import {
   ScrollView
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
 export default function Dashboard() {
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -45,16 +44,6 @@ export default function Dashboard() {
           </View>
         </View>
       </ScrollView>
-
-      {/* Navbar fixa */}
-      <View style={styles.navbar}>
-        <TouchableOpacity style={styles.menuIcon}>
-          <Ionicons name="menu" size={30} color="#fff" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.profileIcon}>
-          <Ionicons name="person-circle" size={30} color="#fff" />
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 }
@@ -99,17 +88,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginTop: 10,
     fontSize: 16,
-  },
-  navbar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#003366',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
   },
   menuIcon: {
     justifyContent: 'center',

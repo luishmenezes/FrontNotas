@@ -12,10 +12,12 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.davidbjjj.NotaFacil"
     },
     "web": {
       "bundler": "metro",
@@ -23,6 +25,12 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      [
+        "@react-native-community/datetimepicker",
+        {
+          "mode": "android"
+        }
+      ],
       "expo-router",
       [
         "expo-splash-screen",
@@ -32,10 +40,24 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true,
+            "extraProguardRules": "-keep class com.swmansion.reanimated.** { *; }"
+          }
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "29ab5d0d-1c33-424b-b6d1-2f6975e34066"
+      }
     }
   }
 }
