@@ -18,7 +18,12 @@ interface Professor {
   disciplinas: string[];
 }
 
-export default function ProfessorListScreen() {
+interface ProfessorListScreenProps {
+  navigation: any;
+  route: any;
+}
+
+export default function ProfessorListScreen({ navigation, route }: ProfessorListScreenProps) {
   const [professores, setProfessores] = useState<Professor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -34,11 +39,12 @@ export default function ProfessorListScreen() {
       ]
     },
     {
-      id: '1',
-      nome: "Prof. Marcio",
-      email: "marcio.silva@unicap.br",
+      id: '2',
+      nome: "Prof. Ana",
+      email: "ana.santos@unicap.br",
       disciplinas: [
-        "Programação  Mobile",
+        "Matemática",
+        "Física"
       ]
     },
   ];
@@ -46,7 +52,7 @@ export default function ProfessorListScreen() {
   const fetchProfessores = async () => {
     try {
       setLoading(true);
-      // const data = await getProfessores(); // 
+      // const data = await getProfessores(); 
       await new Promise(resolve => setTimeout(resolve, 1000));
       setProfessores(mockProfessores);
       setError('');
@@ -60,34 +66,25 @@ export default function ProfessorListScreen() {
 
   useEffect(() => {
     fetchProfessores();
-  }, []);
+    
+    if (route?.params?.professorAtualizado) {
+      const professorAtualizado = route.params.professorAtualizado;
+      setProfessores(prev => 
+        prev.map(prof => 
+          prof.id === professorAtualizado.id ? professorAtualizado : prof
+        )
+      );
+      navigation.setParams({ professorAtualizado: undefined });
+    }
+  }, [route?.params?.professorAtualizado]);
 
   const onRefresh = () => {
     setRefreshing(true);
     fetchProfessores();
   };
 
-  const handleProfessorPress = (professor: Professor) => {
-    Alert.alert(
-      professor.nome,
-      `Email: ${professor.email}\n\nDisciplinas:\n${professor.disciplinas.join('\n')}`,
-      [
-        { text: 'Ver Detalhes', onPress: () => console.log('Ver detalhes') },
-        { text: 'Contatar', onPress: () => console.log('Contatar professor') },
-        { text: 'Fechar', style: 'cancel' }
-      ]
-    );
-  };
-
   const handleEdit = (professor: Professor) => {
-    Alert.alert(
-      'Editar Professor',
-      `Editar dados de ${professor.nome}`,
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        { text: 'Editar', onPress: () => console.log('Editando:', professor.nome) }
-      ]
-    );
+    navigation.navigate('ProfessorEdit', { professor });
   };
 
   const handleDelete = (professor: Professor) => {
@@ -147,10 +144,7 @@ export default function ProfessorListScreen() {
           />
         }
         renderItem={({ item }) => (
-          <TouchableOpacity 
-            style={styles.card}
-            onPress={() => handleProfessorPress(item)}
-          >
+          <View style={styles.card}>
             <View style={styles.leftSection}>
               <Text style={styles.professorNome}>{item.nome}</Text>
               
@@ -165,33 +159,26 @@ export default function ProfessorListScreen() {
               <Text style={styles.value}>{item.email}</Text>
               
               <Text style={styles.value}>
-                 {item.disciplinas}
+                {item.disciplinas.length > 0 ? item.disciplinas.join(', ') : 'Nenhuma disciplina'}
               </Text>
             </View>
-
 
             <View style={styles.actionsContainer}>
               <TouchableOpacity 
                 style={styles.actionButton}
-                onPress={(e) => {
-                  e.stopPropagation();
-                  handleEdit(item);
-                }}
+                onPress={() => handleEdit(item)}
               >
-                <MaterialIcons name="edit" size={18}/>
+                <MaterialIcons name="edit" size={18} color="#007BFF" />
               </TouchableOpacity>
               
               <TouchableOpacity 
                 style={[styles.actionButton, styles.deleteButton]}
-                onPress={(e) => {
-                  e.stopPropagation();
-                  handleDelete(item);
-                }}
+                onPress={() => handleDelete(item)}
               >
-                <MaterialIcons name="delete" size={18} />
+                <MaterialIcons name="delete" size={18} color="#F44336" />
               </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+          </View>
         )}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
