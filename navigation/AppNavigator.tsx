@@ -17,7 +17,8 @@ import TabNavigator from './TabNavigator';
 import Perfil from '@/screens/Perfil/Perfil';
 import InicioStack from './InicioStack';
 import EventosAluno from '@/screens/EventosAluno';
-
+import ProfessorListScreen from '@/screens/ProfessorListScreen';
+import ProfessorEditScreen from '@/screens/ProfessorEditScreen';
 export type RootStackParamList = {
   SelectUser: undefined;
   Cadastro: { tipo: string };
@@ -33,6 +34,9 @@ export type RootStackParamList = {
   EventoProfessor: undefined;
   EventosAluno: undefined;
   Disciplinas: undefined;
+  ProfessorListScreen: undefined;
+  ProfessorEdit: { professor: { id: string; nome: string; email: string; disciplinas: string[] } };
+
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -45,7 +49,13 @@ export default function AppNavigator() {
       <Stack.Screen name="Cadastro" component={CadastroScreen} />
       <Stack.Screen name="CadastroProfessor" component={CadastroProfessor} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="ProfessorListScreen" component={ProfessorListScreen} />
       <Stack.Screen name="CadastroAluno" component={CadastroAluno} />
+       <Stack.Screen 
+        name="ProfessorEdit" 
+        component={ProfessorEditScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="CodigoRecupera" component={CodigoRecupera} />
       <Stack.Screen name="NovaSenha" component={NovaSenha} />
         <Stack.Screen 
