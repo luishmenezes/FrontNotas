@@ -5,6 +5,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import Inicio from '@/screens/Inicio/Inicio';
 import HeaderPerfil from '@/components/HeaderPerfil';
 import NotificacoesScreen from '@/screens/NotificacoesScreen';
+import DashboardScreen from "@/screens/Dashboard/DashboardScreen";
 
 // Telas das tabs
 function AtividadesScreen() {
@@ -104,14 +105,14 @@ export default function TabNavigator() {
         headerShown: false,
       })}
     >
-      <Tab.Screen 
-        name="Início" 
+      <Tab.Screen
+        name="Início"
         component={Inicio}
         options={{
           tabBarIcon: ({ color, size, focused }) => (
-            <MaterialIcons 
-              name="home" 
-              size={size} 
+            <MaterialIcons
+              name="home"
+              size={size}
               color={color}
               style={focused ? styles.iconFocused : null}
             />
@@ -123,17 +124,17 @@ export default function TabNavigator() {
         component={AtividadesScreen}
         options={{
           tabBarIcon: ({ color, size, focused }) => (
-            <MaterialIcons 
-              name="assignment" 
-              size={size} 
+            <MaterialIcons
+              name="assignment"
+              size={size}
               color={color}
               style={focused ? styles.iconFocused : null}
             />
           ),
         }}
       />
-      <Tab.Screen 
-        name="Notificações" 
+      <Tab.Screen
+        name="Notificações"
         component={NotificacoesScreen}
         options={{
           tabBarBadge: 3, // Número de notificações não lidas
@@ -151,9 +152,9 @@ export default function TabNavigator() {
         component={EquipesScreen}
         options={{
           tabBarIcon: ({ color, size, focused }) => (
-            <MaterialIcons 
-              name="groups" 
-              size={size} 
+            <MaterialIcons
+              name="groups"
+              size={size}
               color={color}
               style={focused ? styles.iconFocused : null}
             />
@@ -165,9 +166,9 @@ export default function TabNavigator() {
         component={TrabalhoScreen}
         options={{
           tabBarIcon: ({ color, size, focused }) => (
-            <MaterialIcons 
-              name="work" 
-              size={size} 
+            <MaterialIcons
+              name="work"
+              size={size}
               color={color}
               style={focused ? styles.iconFocused : null}
             />
@@ -179,15 +180,29 @@ export default function TabNavigator() {
         component={CalendarioScreen}
         options={{
           tabBarIcon: ({ color, size, focused }) => (
-            <MaterialIcons 
-              name="calendar-today" 
-              size={size} 
+            <MaterialIcons
+              name="calendar-today"
+              size={size}
               color={color}
               style={focused ? styles.iconFocused : null}
             />
           ),
         }}
       />
+        <Tab.Screen
+            name="Dashboard"
+            component={DashboardScreen}
+            options={{
+                tabBarIcon: ({ color, size, focused }) => (
+                    <MaterialIcons
+                        name="dashboard"
+                        size={size}
+                        color={color}
+                        style={focused ? styles.iconFocused : null}
+                    />
+                ),
+            }}
+        />
     </Tab.Navigator>
   );
 }

@@ -17,6 +17,7 @@ import TabNavigator from './TabNavigator';
 import Perfil from '@/screens/Perfil/Perfil';
 import InicioStack from './InicioStack';
 import EventosAluno from '@/screens/EventosAluno';
+import DashboardScreen from "@/screens/Dashboard/DashboardScreen";
 import ProfessorListScreen from '@/screens/ProfessorListScreen';
 import ProfessorEditScreen from '@/screens/ProfessorEditScreen';
 export type RootStackParamList = {
@@ -34,8 +35,10 @@ export type RootStackParamList = {
   EventoProfessor: undefined;
   EventosAluno: undefined;
   Disciplinas: undefined;
+  Dashboard: undefined;
   ProfessorListScreen: undefined;
   ProfessorEdit: { professor: { id: string; nome: string; email: string; disciplinas: string[] } };
+
 
 };
 
@@ -58,6 +61,7 @@ export default function AppNavigator() {
       />
       <Stack.Screen name="CodigoRecupera" component={CodigoRecupera} />
       <Stack.Screen name="NovaSenha" component={NovaSenha} />
+        <Stack.Screen name="Dashboard" component={DashboardScreen} />
         <Stack.Screen 
         name="Inicio" 
         component={InicioStack} 

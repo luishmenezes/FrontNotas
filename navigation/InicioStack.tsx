@@ -10,7 +10,8 @@ import InicioScreen from '../screens/Inicio/Inicio';
 import CalendarioScreen from '../screens/Calendario/Calendario';
 import HeaderPerfil from '../components/HeaderPerfil';
 import EventosAluno from '@/screens/EventosAluno';
-import DisciplinasScreen from '../screens/Disciplinas/DisciplinasScreen'; // Importe a tela de Disciplinas
+import DisciplinasScreen from '../screens/Disciplinas/DisciplinasScreen';
+import DashboardScreen from "@/screens/Dashboard/DashboardScreen"; // Importe a tela de Disciplinas
 
 // Definindo os tipos de ícones permitidos
 type MaterialIconName = React.ComponentProps<typeof MaterialIcons>['name'];
@@ -78,6 +79,7 @@ function MainTabs() {
         <Tab.Screen name="Início" component={InicioScreen} />
         <Tab.Screen name="Disciplinas" component={DisciplinasScreen} />
         <Tab.Screen name="Calendário" component={CalendarioScreen} />
+        <Tab.Screen name="Dashboard" component={DashboardScreen} />
         <Tab.Screen 
           name="Notificação" 
           component={EventosAluno}
