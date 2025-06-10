@@ -1,9 +1,55 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Alert,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../navigation/AppNavigator'; // Ajuste o caminho se necessário
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function LoginScreen() {
-  const router = useRouter();
+  const navigation = useNavigation<NavigationProp>();
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+
+  const handleLogin = async () => {
+  try {
+    const response = await fetch('http://localhost:8080/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, senha }),
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      console.log('Login realizado com sucesso!', data);
+
+      // Salvar token no AsyncStorage
+      await AsyncStorage.setItem('authToken', data.token);
+
+      // Redireciona para a tela de início
+      navigation.replace('Inicio');
+    } else {
+      const errorText = await response.text();
+      Alert.alert('Erro ao fazer login', errorText);
+    }
+  } catch (error) {
+    console.error('Erro na requisição de login:', error);
+    Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
+  }
+};
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -21,6 +67,10 @@ export default function LoginScreen() {
             style={styles.input}
             placeholder="Digite seu email"
             placeholderTextColor="#aaa"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
 
           <Text style={styles.label}>Senha</Text>
@@ -29,20 +79,22 @@ export default function LoginScreen() {
             placeholder="Digite sua senha"
             secureTextEntry
             placeholderTextColor="#aaa"
+            value={senha}
+            onChangeText={setSenha}
           />
 
           <TouchableOpacity>
             <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.confirmButton}>
+          <TouchableOpacity style={styles.confirmButton} onPress={handleLogin}>
             <Text style={styles.confirmText}>Confirmar</Text>
           </TouchableOpacity>
         </View>
 
         <TouchableOpacity
           style={styles.createBtn}
-          onPress={() => router.push('/SelectUserScreen')}
+          onPress={() => navigation.navigate('SelectUser')}
         >
           <Text style={styles.socialText}>Criar Conta</Text>
         </TouchableOpacity>
@@ -63,7 +115,7 @@ export default function LoginScreen() {
             Não tem conta?{' '}
             <Text
               style={styles.registerLink}
-              onPress={() => router.push('/cadastro')}
+              onPress={() => navigation.navigate('Cadastro', { tipo: 'Aluno' })}
             >
               Cadastre-se
             </Text>
@@ -82,8 +134,8 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   scrollContainer: {
-    flexGrow: 1, 
-    paddingBottom: 30, 
+    flexGrow: 1,
+    paddingBottom: 30,
   },
   image: {
     width: 200,

@@ -46,7 +46,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="Inicio">
+    <Stack.Navigator initialRouteName="LoginScreen">
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="SelectUser" component={SelectUserScreen} />
       <Stack.Screen name="Cadastro" component={CadastroScreen} />
