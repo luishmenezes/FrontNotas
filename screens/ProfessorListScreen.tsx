@@ -18,7 +18,7 @@ interface Professor {
   disciplinas: string[];
 }
 
-export default function ProfessorDisciplinasScreen() {
+export default function ProfessorListScreen() {
   const [professores, setProfessores] = useState<Professor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
