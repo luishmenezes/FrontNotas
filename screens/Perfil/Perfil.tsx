@@ -1,56 +1,114 @@
-// components/HeaderPerfil.tsx
-import React from 'react';
-import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../navigation/types';
+import React from "react";
+import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 
-export default function HeaderPerfil() {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
+export default function Perfil() {
   return (
-    <View style={styles.headerContainer}>
-      <TouchableOpacity 
-        onPress={() => navigation.navigate('Perfil')}
-        style={styles.profileButton}
-      >
+    <SafeAreaView style={styles.container}>
+      {/* Cabeçalho */}
+       <View style={styles.header}>
         <Image
-          source={{ uri: 'https://placekitten.com/200/200' }} // Substitua pela foto real do usuário
-          style={styles.profileImage}
+          source={require('../../assets/pessoa.png')} // Imagem local
+          style={styles.avatar}
         />
-      </TouchableOpacity>
-    </View>
+        <Text style={styles.name}>Erick Abraão Santos</Text>
+      </View>
+
+      {/* Status */}
+      <View style={styles.statusBox}>
+        <View style={styles.statusRow}>
+          <MaterialIcons name="check-circle" size={20} color="green" />
+          <Text style={styles.statusText}>
+            Disponível - Disponível o dia todo{"\n"}Horário: 12:00 - 8:00
+          </Text>
+        </View>
+        <View style={styles.statusRow}>
+          <MaterialIcons name="access-time" size={20} color="gray" />
+          <Text style={styles.statusText}>11:03 - Seu horário local</Text>
+        </View>
+      </View>
+
+      {/* Contato */}
+      <View style={styles.contactBox}>
+        <Text style={styles.contactTitle}>Contato</Text>
+        <View style={styles.contactRow}>
+          <MaterialIcons name="email" size={24} color="black" />
+          <Text style={styles.emailText}>erick01924@gmail.com</Text>
+        </View>
+      </View>      
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    backgroundColor: '#007BFF', // Azul
-    height: 120,
-    paddingHorizontal: 16,
-    justifyContent: 'center',
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
   },
-  profileButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    left: 16,
-    bottom: -30, // Metade para fora do header
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
+  header: {
+    backgroundColor: "#003366",
+    paddingTop: 40,
+    paddingBottom: 20,
+    alignItems: "center",
   },
-  profileImage: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    borderWidth: 2,
-    borderColor: '#007BFF',
+  avatar: {
+  width: 80,
+  height: 80,
+  borderRadius: 40,
+  marginBottom: 10,
+  borderWidth: 2,
+  borderColor: 'white',
+},
+  name: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  statusBox: {
+    backgroundColor: "#e0e0e0",
+    marginHorizontal: 20,
+    marginTop: 20,
+    borderRadius: 8,
+    overflow: "hidden",
+  },
+  statusRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    backgroundColor: "#d3d3d3",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
+  statusText: {
+    marginLeft: 10,
+    fontSize: 14,
+    flexShrink: 1,
+  },
+  contactBox: {
+    marginTop: 40,
+    alignItems: "center",
+  },
+  contactTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 15,
+  },
+  contactRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  emailText: {
+    marginLeft: 8,
+    fontSize: 16,
+  },
+  footer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "#003366",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingVertical: 12,
   },
 });
