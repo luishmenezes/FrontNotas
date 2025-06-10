@@ -12,6 +12,7 @@ import HeaderPerfil from '../components/HeaderPerfil';
 import EventosAluno from '@/screens/EventosAluno';
 import DisciplinasScreen from '../screens/Disciplinas/DisciplinasScreen';
 import DashboardScreen from "@/screens/Dashboard/DashboardScreen"; // Importe a tela de Disciplinas
+import Sobre from '../screens/Sobre/sobreScreen';
 
 // Definindo os tipos de ícones permitidos
 type MaterialIconName = React.ComponentProps<typeof MaterialIcons>['name'];
@@ -124,6 +125,20 @@ export default function InicioStack() {
           },
         }}
       />
+      <Stack.Screen
+    name="Sobre"
+    component={Sobre}
+    options={{
+      presentation: 'modal',
+      gestureEnabled: true,
+      animation: 'slide_from_left',
+      contentStyle: {
+        backgroundColor: 'white',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+      },
+    }}
+  />
     </Stack.Navigator>
   );
 }
