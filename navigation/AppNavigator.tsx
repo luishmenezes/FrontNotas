@@ -20,6 +20,10 @@ import EventosAluno from '@/screens/EventosAluno';
 import DashboardScreen from "@/screens/Dashboard/DashboardScreen";
 import ProfessorListScreen from '@/screens/ProfessorListScreen';
 import ProfessorEditScreen from '@/screens/ProfessorEditScreen';
+import Sobre from '@/screens/Sobre/sobreScreen';
+
+
+
 export type RootStackParamList = {
   SelectUser: undefined;
   Cadastro: { tipo: string };
@@ -37,6 +41,7 @@ export type RootStackParamList = {
   Disciplinas: undefined;
   Dashboard: undefined;
   ProfessorListScreen: undefined;
+  Sobre: undefined;
   ProfessorEdit: { professor: { id: string; nome: string; email: string; disciplinas: string[] } };
 
 
@@ -59,6 +64,7 @@ export default function AppNavigator() {
         component={ProfessorEditScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="Sobre" component={Sobre}/>
       <Stack.Screen name="CodigoRecupera" component={CodigoRecupera} />
       <Stack.Screen name="NovaSenha" component={NovaSenha} />
         <Stack.Screen name="Dashboard" component={DashboardScreen} />

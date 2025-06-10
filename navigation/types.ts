@@ -7,6 +7,7 @@ export type RootStackParamList = {
   EventosAluno: undefined;
   Notificacoes: undefined;
   EventoProfessor:undefined;
+  Sobre:undefined;
   // Adicione todas as rotas aqui
 };
 
