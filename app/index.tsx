@@ -1,2 +1,2 @@
 // app/index.tsx
-export { default } from "./home";
+export { default } from "./login";

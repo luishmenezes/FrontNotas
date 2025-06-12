@@ -9,38 +9,20 @@ import { RootStackParamList } from '../navigation/AppNavigator'; // ajuste se ne
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
+
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 
 export default function HomeScreen() {
-  const navigation = useNavigation<NavigationProp>();
-
-  // Navegação automática após 2 segundos
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      navigation.replace('LoginScreen');
-    }, 2000);
-
-    return () => clearTimeout(timeout); // limpa timeout se o usuário sair da tela
-  }, []);
-
-  const handlePress = () => {
-    navigation.replace('LoginScreen');
-  };
-
   return (
-    <TouchableWithoutFeedback onPress={handlePress}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Bem-vindo à Home!</Text>
-        <Text style={styles.subtitle}>Toque para continuar ou aguarde...</Text>
-      </View>
-    </TouchableWithoutFeedback>
+    <View style={styles.container}>
+      <Text style={styles.title}>Bem-vindo à Home!</Text>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   title: { fontSize: 24, fontWeight: 'bold' },
-  subtitle: { fontSize: 16, marginTop: 12, color: '#666' },
 });
