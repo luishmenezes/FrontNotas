@@ -1,23 +1,34 @@
-// components/HeaderPerfil.tsx
-import React from 'react';
+// HeaderPerfil.tsx
+import React, { useContext } from 'react';
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigation/types';
+import { RootStackParamList } from '../navigation/AppNavigator';
+import { useAuth } from '../context/AuthContext';
+
 
 export default function HeaderPerfil() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const { role } = useAuth();
+
+  const handleNavigation = () => {
+    if (role === 'ESCOLA') {
+      navigation.navigate('ProfessorListScreen');
+    } else {
+      navigation.navigate('Perfil');
+    }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContent}>
         <TouchableOpacity 
-          onPress={() => navigation.navigate('Perfil')}
+          onPress={handleNavigation}
           style={styles.profileButton}
         >
           <Image
-            source={{ uri: 'https://placekitten.com/200/200' }} // Substitua pela foto real
+            source={{ uri: 'https://placekitten.com/200/200' }}
             style={styles.profileImage}
           />
           <MaterialIcons 
@@ -37,7 +48,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#003F73',
     paddingHorizontal: 16,
     paddingVertical: 12,
-   
   },
   headerContent: {
     flexDirection: 'row',

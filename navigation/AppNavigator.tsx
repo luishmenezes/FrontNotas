@@ -38,7 +38,7 @@ export type RootStackParamList = {
   Dashboard: undefined;
   ProfessorListScreen: undefined;
   ProfessorEdit: { professor: { id: string; nome: string; email: string; disciplinas: string[] } };
-
+  Perfil:undefined
 
 };
 
@@ -46,12 +46,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="LoginScreen">
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="SelectUser" component={SelectUserScreen} />
       <Stack.Screen name="Cadastro" component={CadastroScreen} />
       <Stack.Screen name="CadastroProfessor" component={CadastroProfessor} />
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="ProfessorListScreen" component={ProfessorListScreen} />
       <Stack.Screen name="CadastroAluno" component={CadastroAluno} />
        <Stack.Screen 
@@ -70,6 +70,9 @@ export default function AppNavigator() {
       <Stack.Screen name="EventoProva" component={EventoProva} />
       <Stack.Screen name="Calendario" component={Calendario} />
       <Stack.Screen name="EventoProfessor" component={EventoProfessor} />
+      <Stack.Screen name="Perfil" component={Perfil} />
+      
+
       <Stack.Screen 
       name="EventosAluno" 
       component={EventosAluno} 
