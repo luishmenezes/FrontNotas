@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import {
   View,
@@ -10,6 +11,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator'; // ajuste se necessário
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp>();

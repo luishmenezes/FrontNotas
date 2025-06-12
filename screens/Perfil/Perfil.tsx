@@ -1,12 +1,21 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
+
+
+
 
 export default function Perfil() {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       {/* Cabeçalho */}
        <View style={styles.header}>
+         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+    <MaterialIcons name="arrow-back" size={24} color="white" />
+  </TouchableOpacity>
         <Image
           source={require('../../assets/pessoa.png')} // Imagem local
           style={styles.avatar}
@@ -111,4 +120,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingVertical: 12,
   },
+  backButton: {
+  position: 'absolute',
+  top: 45,
+  left: 20,
+  padding: 5,
+},
+
 });

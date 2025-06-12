@@ -1,5 +1,6 @@
-// HeaderPerfil.tsx
+
 import React, { useContext } from 'react';
+
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -23,18 +24,29 @@ export default function HeaderPerfil() {
   return (
     <View style={styles.container}>
       <View style={styles.headerContent}>
+        {/* Botão de Sobre (lado esquerdo) */}
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('Sobre')} 
+          style={styles.aboutButton}
+        >
+          <MaterialIcons name="info" size={26} color="#fff" />
+        </TouchableOpacity>
+
+        {/* Botão de Perfil (lado direito) */}
         <TouchableOpacity 
           onPress={handleNavigation}
           style={styles.profileButton}
         >
           <Image
-            source={{ uri: 'https://placekitten.com/200/200' }}
+
+            source={require('../assets/pessoa.png')}
+
             style={styles.profileImage}
           />
           <MaterialIcons 
             name="arrow-forward-ios" 
             size={16} 
-            color="#666" 
+            color="#ccc" 
             style={styles.arrowIcon}
           />
         </TouchableOpacity>
@@ -51,8 +63,11 @@ const styles = StyleSheet.create({
   },
   headerContent: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between', // ícone à esquerda e avatar à direita
     alignItems: 'center',
+  },
+  aboutButton: {
+    padding: 8,
   },
   profileButton: {
     flexDirection: 'row',
