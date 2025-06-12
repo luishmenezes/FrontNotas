@@ -1,9 +1,6 @@
 
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
   TouchableWithoutFeedback
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
