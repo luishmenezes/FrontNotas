@@ -1,25 +1,12 @@
-
-import React, { useContext } from 'react';
-
+import React from 'react';
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigation/AppNavigator';
-import { useAuth } from '../context/AuthContext';
-
+import { RootStackParamList } from '../navigation/types';
 
 export default function HeaderPerfil() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const { role } = useAuth();
-
-  const handleNavigation = () => {
-    if (role === 'ESCOLA') {
-      navigation.navigate('ProfessorListScreen');
-    } else {
-      navigation.navigate('Perfil');
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -34,13 +21,11 @@ export default function HeaderPerfil() {
 
         {/* Botão de Perfil (lado direito) */}
         <TouchableOpacity 
-          onPress={handleNavigation}
+          onPress={() => navigation.navigate('Perfil')}
           style={styles.profileButton}
         >
           <Image
-
             source={require('../assets/pessoa.png')}
-
             style={styles.profileImage}
           />
           <MaterialIcons 
