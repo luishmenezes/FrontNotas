@@ -1,3 +1,15 @@
+
+import  { useEffect } from 'react';
+import {
+  TouchableWithoutFeedback
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/AppNavigator'; // ajuste se necessário
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
