@@ -1,7 +1,8 @@
 export type RootStackParamList = {
   Home: undefined;
+  Cadastro: undefined;
   CadastroProfessor: undefined;
-  Login: undefined;
+  LoginScreen: undefined;
   Perfil: undefined;
   Tab: undefined;
   EventosAluno: undefined;
