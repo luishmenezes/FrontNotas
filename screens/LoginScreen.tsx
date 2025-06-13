@@ -92,12 +92,7 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
-          style={styles.createBtn}
-          onPress={() => navigation.navigate('SelectUser')}
-        >
-          <Text style={styles.socialText}>Criar Conta</Text>
-        </TouchableOpacity>
+        
 
         <Text style={styles.otherLogins}>Outros Logins</Text>
 
