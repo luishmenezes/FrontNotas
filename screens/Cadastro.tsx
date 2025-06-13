@@ -21,7 +21,7 @@ interface Props {
 // Tipagem do navigation
 type CadastroScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Cadastro'>;
 
-export default function CadastroScreen({ tipoUsuario = 'Desconhecido' }: Props) {
+export default function CadastroScreen({ tipoUsuario = 'aluno' }: Props) {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');

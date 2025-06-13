@@ -8,15 +8,16 @@ import axios from 'axios';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@/navigation/types';
 
-type CadastroScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'CadastroAluno'>;
+type CadastroScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'CadastroEscola'>;
 
-export default function FormAluno() {
+export default function FormEscola() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
+  const [endereco, setEndereco] = useState('');
   const [senha, setSenha] = useState('');
-  const [confirmarSenha, setConfirmarSenha] = useState('');
-  const [aceitoPoliticas, setAceitoPoliticas] = useState(false);  
-  const navigation = useNavigation();
+ 
+ const navigation = useNavigation<CadastroScreenNavigationProp>(); 
+ 
 
   useEffect(() => {
     const verificarToken = async () => {
@@ -33,42 +34,36 @@ export default function FormAluno() {
     verificarToken();
   }, []);
 
-  const handleCadastroAluno = async () => {
-    if (!nome || !email || !senha || !confirmarSenha) {
+  const handleCadastroEscola = async () => {
+    if (!nome || !email || !endereco || !senha ) {
       Alert.alert('Preencha todos os campos!');
       return;
     }
 
-    if (senha !== confirmarSenha) {
-      Alert.alert('As senhas não coincidem!');
-      return;
-    }
+   
 
     if (!/\S+@\S+\.\S+/.test(email)) {
       Alert.alert('Formato de e-mail inválido!');
       return;
     }
 
-    if (!aceitoPoliticas) {
-      Alert.alert('Você precisa aceitar as políticas de privacidade.');
-      return;
-    }
+    
 
-    const aluno = {
+    const escola = {
       nome,
       email,
       senha,
-      notas: [],
-      professorId: null,
+      endereco
     };
 
     try {
-      await axios.post('https://backnotas.onrender.com/alunos', aluno);
+      await axios.post('https://backnotas.onrender.com/escolas', escola);
 
-      const loginResponse = await axios.post('https://backnotas.onrender.com/auth/login', {
+      const loginResponse = await axios.post('https://backnotas.onrender.com/escolas', {
         email,
         senha,
       });
+
       const token = loginResponse.data.token || loginResponse.data.accessToken;
       await AsyncStorage.setItem('token', token);
 
@@ -76,9 +71,8 @@ export default function FormAluno() {
       setNome('');
       setEmail('');
       setSenha('');
-      setConfirmarSenha('');
-      setAceitoPoliticas(false);  
-
+      setEndereco('');
+      
       navigation.navigate('LoginScreen');
 
     } catch (err: any) {
@@ -99,22 +93,22 @@ export default function FormAluno() {
     >
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.form}>
-          <Text style={styles.title}>Cadastro de Aluno</Text>
+          <Text style={styles.title}>Cadastro de Escola</Text>
 
           <CustomInput placeholder="Nome" value={nome} onChangeText={setNome} />
 
           <CustomInput placeholder="Email" value={email} onChangeText={setEmail} />
 
+          
+
           <CustomInput placeholder="Senha" secureTextEntry value={senha} onChangeText={setSenha} />
 
-          <CustomInput placeholder="Confirmar Senha" secureTextEntry value={confirmarSenha} onChangeText={setConfirmarSenha} />
-
-          <View style={styles.checkboxContainer}>
-            <Text style={styles.checkboxLabel}>Aceito as políticas de privacidade</Text>
-          </View>
+          <CustomInput placeholder="Endereco" value={endereco} onChangeText={setEndereco} />
 
           
-          <CustomButton title="Confirmar" onPress={handleCadastroAluno} />
+
+          
+          <CustomButton title="Confirmar" onPress={handleCadastroEscola} />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

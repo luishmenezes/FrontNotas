@@ -2,6 +2,7 @@ export type RootStackParamList = {
   Home: undefined;
   Cadastro: undefined;
   CadastroProfessor: undefined;
+  CadastroAluno:undefined;
   LoginScreen: undefined;
   Perfil: undefined;
   Tab: undefined;
@@ -9,6 +10,7 @@ export type RootStackParamList = {
   Notificacoes: undefined;
   EventoProfessor:undefined;
   Sobre:undefined;
+  CadastroEscola:undefined;
   // Adicione todas as rotas aqui
 };
 
