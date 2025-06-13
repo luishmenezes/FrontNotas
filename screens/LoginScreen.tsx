@@ -115,7 +115,7 @@ export default function LoginScreen() {
             Não tem conta?{' '}
             <Text
               style={styles.registerLink}
-              onPress={() => navigation.navigate('Cadastro', { tipo: 'Aluno' })}
+              onPress={() => navigation.navigate('TipoCadastro')}
             >
               Cadastre-se
             </Text>

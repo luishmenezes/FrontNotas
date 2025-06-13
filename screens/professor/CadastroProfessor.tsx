@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity, ActivityIndicator, Modal, FlatList } from 'react-native';
+import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity, ActivityIndicator, FlatList, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import axios from 'axios';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '@/navigation/types';
 
 interface Escola {
   id: string;
   nome: string;
 }
 
+type CadastroScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'CadastroProfessor'>;
 export default function CadastroProfessor() {
-  const [nome, setNome] = useState('');
+    const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [escolaSelecionada, setEscolaSelecionada] = useState('');
@@ -18,6 +22,8 @@ export default function CadastroProfessor() {
   const [mostrarDropdown, setMostrarDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
   const [carregandoEscolas, setCarregandoEscolas] = useState(false);
+
+  const navigation = useNavigation<CadastroScreenNavigationProp>();
 
   useEffect(() => {
     carregarEscolas();
@@ -49,7 +55,7 @@ export default function CadastroProfessor() {
     }
   };
 
-  const selecionarEscola = (escola: Escola) => {
+ const selecionarEscola = (escola: Escola) => {
     setEscolaSelecionada(escola.nome);
     setMostrarDropdown(false);
   };
@@ -82,127 +88,151 @@ export default function CadastroProfessor() {
       setEmail('');
       setSenha('');
       setEscolaSelecionada('');
+
+      navigation.navigate('LoginScreen');
     } catch (error) {
       console.error(error);
       Alert.alert('Erro', 'Não foi possível cadastrar o professor.');
     } finally {
       setLoading(false);
     }
+    
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Cadastro de Professor</Text>
-      
-      <TextInput
-        placeholder="Nome"
-        style={styles.input}
-        value={nome}
-        onChangeText={setNome}
-      />
-      
-      <TextInput
-        placeholder="Email"
-        style={styles.input}
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      
-      <TextInput
-        placeholder="Senha"
-        style={styles.input}
-        value={senha}
-        onChangeText={setSenha}
-        secureTextEntry
-      />
-      
-      <View style={styles.escolaContainer}>
-        <View style={styles.inputContainer}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={styles.container}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.form}>
+          <Text style={styles.title}>Cadastro de Professor</Text>
+
+          <Text style={styles.label}>Nome</Text>
           <TextInput
-            placeholder="Digite o nome da escola ou selecione"
-            style={styles.inputCombinado}
-            value={escolaSelecionada}
-            onChangeText={filtrarEscolas}
-            onFocus={() => setMostrarDropdown(true)}
+            style={styles.input}
+            value={nome}
+            onChangeText={setNome}
           />
-          <TouchableOpacity onPress={toggleDropdown} style={styles.dropdownButton}>
-            <MaterialIcons 
-              name={mostrarDropdown ? 'arrow-drop-up' : 'arrow-drop-down'} 
-              size={24} 
-              color="#555" 
-            />
+
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+
+          <Text style={styles.label}>Senha</Text>
+          <TextInput
+            style={styles.input}
+            value={senha}
+            onChangeText={setSenha}
+            secureTextEntry
+          />
+
+          <Text style={styles.label}>Escola</Text>
+          <View style={styles.escolaContainer}>
+            <View style={styles.inputContainer}>
+              <TextInput
+                placeholder="Digite o nome da escola ou selecione"
+                style={styles.inputCombinado}
+                value={escolaSelecionada}
+                onChangeText={filtrarEscolas}
+                onFocus={() => setMostrarDropdown(true)}
+              />
+              <TouchableOpacity onPress={toggleDropdown} style={styles.dropdownButton}>
+                <MaterialIcons
+                  name={mostrarDropdown ? 'arrow-drop-up' : 'arrow-drop-down'}
+                  size={24}
+                  color="#555"
+                />
+              </TouchableOpacity>
+            </View>
+
+            {carregandoEscolas && (
+              <ActivityIndicator size="small" style={styles.carregando} />
+            )}
+
+            {mostrarDropdown && (
+              <View style={styles.dropdown}>
+                <FlatList
+                  data={escolasFiltradas}
+                  keyExtractor={(item) => item.id}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={styles.itemDropdown}
+                      onPress={() => selecionarEscola(item)}
+                    >
+                      <Text>{item.nome}</Text>
+                    </TouchableOpacity>
+                  )}
+                  keyboardShouldPersistTaps="always"
+                  style={styles.listaDropdown}
+                />
+              </View>
+            )}
+          </View>
+
+          <TouchableOpacity
+            onPress={handleCadastro}
+            style={[styles.button, loading && styles.buttonLoading]}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Cadastrar</Text>
+            )}
           </TouchableOpacity>
         </View>
-
-        {carregandoEscolas && (
-          <ActivityIndicator size="small" style={styles.carregando} />
-        )}
-
-        {mostrarDropdown && (
-          <View style={styles.dropdown}>
-            <FlatList
-              data={escolasFiltradas}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={styles.itemDropdown}
-                  onPress={() => selecionarEscola(item)}
-                >
-                  <Text>{item.nome}</Text>
-                </TouchableOpacity>
-              )}
-              keyboardShouldPersistTaps="always"
-              style={styles.listaDropdown}
-            />
-          </View>
-        )}
-      </View>
-      
-      <TouchableOpacity
-        onPress={handleCadastro}
-        style={[styles.button, loading && styles.buttonLoading]}
-        disabled={loading}
-      >
-        {loading ? (
-          <ActivityIndicator size="small" color="#fff" />
-        ) : (
-          <Text style={styles.buttonText}>Cadastrar</Text>
-        )}
-      </TouchableOpacity>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#007bdb',
+  },
+  scrollContent: {
+    paddingTop: 60,
+    paddingBottom: 40,
+  },
+  form: {
+    backgroundColor: '#0455BF',
+    marginHorizontal: 24,
+    borderRadius: 16,
     padding: 20,
-    justifyContent: 'center',
   },
   title: {
-    fontSize: 22,
-    marginBottom: 20,
-    textAlign: 'center',
+    fontSize: 24,
     fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 16,
+    color: '#fff',
+  },
+  label: {
+    color: '#fff',
+    marginBottom: 4,
+    marginTop: 10,
+    fontSize: 16,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#aaa',
+    backgroundColor: '#fff',
     borderRadius: 8,
     padding: 10,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   escolaContainer: {
-    marginBottom: 20,
     zIndex: 1,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#aaa',
+    backgroundColor: '#fff',
     borderRadius: 8,
     overflow: 'hidden',
   },
@@ -213,7 +243,7 @@ const styles = StyleSheet.create({
   dropdownButton: {
     padding: 10,
     borderLeftWidth: 1,
-    borderLeftColor: '#aaa',
+    borderLeftColor: '#ccc',
   },
   dropdown: {
     maxHeight: 200,
@@ -240,7 +270,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#00b0ff',
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',
@@ -248,7 +278,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonLoading: {
-    backgroundColor: '#0056b3',
+    backgroundColor: '#0077cc',
   },
   buttonText: {
     color: '#fff',
